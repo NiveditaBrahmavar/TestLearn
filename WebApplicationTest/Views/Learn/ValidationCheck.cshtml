@@ -1,0 +1,120 @@
+﻿@model WebApplicationTest.Models.Customer
+@{
+    ViewBag.Title = "ValidationCheck";
+}
+
+<h2>ValidationCheck</h2>
+<style>
+    .error{
+        color:red;
+    }
+
+</style>
+
+@using (Html.BeginForm("ValidationCheck", "Learn","POST"))
+{
+    <div>
+        <div>
+            <div class="col-md-1">
+                @Html.LabelFor(m => m.Name):
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Name):               
+                @Html.ValidationMessageFor(m => m.Name,"", new {@class="error" })
+            </div>            
+        </div>
+        <br/><br />
+        <div>
+            <div class="col-md-1">
+                @Html.LabelFor(m => m.Address):
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Address):
+                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "error" })
+            </div>
+        </div>
+        <br /><br />
+        <div>
+            <div class="col-md-1">
+                @Html.LabelFor(m => m.Age):
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.Age):
+                @Html.ValidationMessageFor(m => m.Age, "", new { @class = "error" })
+            </div>
+        </div>
+        <br /><br />
+        <div class="row">
+            <div class='col-sm-6'>
+                <div class="form-group">
+                    <div class='input-group date' id='datetimepicker5'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div>
+                <div class="col-md-1">
+                    @Html.DisplayNameFor(m => m.Gender):
+                </div>
+                <div class="col-md-4">
+                    @Html.RadioButtonFor(model => model.Gender, "M")  @Html.Label("Male")
+                    @Html.RadioButtonFor(model => model.Gender, "F")  @Html.Label("Female")
+                    @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "error" })
+                </div>
+                <br />
+                <br />
+            </div>
+            @Html.TextBoxFor(model => model.OtherDetails)
+            @Html.ValidationMessageFor(m => m.OtherDetails, "", new { @class = "error" })
+            <br /><br />
+            <input type="submit" value="submit" class="btn btn-block btn-primary" />
+        </div>
+}
+
+
+<script src="~/Scripts/jquery-1.12.4.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        
+        if ($("input[type='radio']").val() == "M") {
+            $('#OtherDetails').show();
+        }
+        else
+        {
+            $('#OtherDetails').hide();
+        }
+
+        $("input[type='radio']").change(function () {
+
+            if ($(this).val() == "M") {
+                $('#OtherDetails').show();
+            }
+            else {               
+                $('#OtherDetails').next('span').hide();                
+                $('#OtherDetails').hide();                
+            }
+        });
+
+        $(function () {
+            $('#datetimepicker5').datetimepicker({
+                defaultDate: "11/1/2013",
+                disabledDates: [
+                    moment("12/25/2013"),
+                    new Date(2013, 11 - 1, 21),
+                    "11/22/2013 00:53"
+                ]
+            });
+        });
+
+    });
+  
+</script>
